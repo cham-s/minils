@@ -2,7 +2,6 @@
 
 import Foundation
 
-
 let arguments = Array(CommandLine.arguments[1...])
 let parser = ArgumentParser(arguments: arguments)
 

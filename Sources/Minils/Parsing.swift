@@ -33,21 +33,17 @@ public struct ArgumentParser {
     
     public init(arguments: [String]) {
         guard !arguments.isEmpty else { return }
-        
-        let indexStopOption = arguments.firstIndex(of: "--")
-        if let endArgumentIndex = indexStopOption {
-            let next = arguments.index(after: endArgumentIndex)
-            options = Array(arguments[..<endArgumentIndex])
-            files = Array(arguments[next...])
-        } else {
-            let lastArgumentIndex = arguments.lastIndex { $0.hasPrefix("-") }
-            if let lastIndex = lastArgumentIndex,  let first = arguments.first,
-            first.hasPrefix("-") {
-                let next = arguments.index(after: lastIndex)
-                options = Array(arguments[...lastIndex])
-                files = Array(arguments[next...])
+        for i in arguments.indices {
+            if arguments[i] == "--" {
+                let startFileIndex = arguments.index(after: i)
+                files.append(contentsOf: Array(arguments[startFileIndex...]))
+                break
+            } else if arguments[i].hasPrefix("-") {
+                options.append(arguments[i])
+                continue
             } else {
-                files = arguments
+                files.append(contentsOf: Array(arguments[i...]))
+                break
             }
         }
     }
