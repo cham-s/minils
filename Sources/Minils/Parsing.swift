@@ -8,15 +8,8 @@
 import Foundation
 
 
-// MARK: - String input type
-public enum InputType {
-    case filename
-    case option
-    case endOfOption
-}
-
 // MARK: - Option
-public enum Option: String {
+public enum Option: Character {
     case list = "l"
     case recurisve = "R"
     case dotDirectory = "a"
@@ -47,7 +40,6 @@ public struct ArgumentParser {
                 break
             }
         }
-        
     }
 }
 
