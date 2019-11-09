@@ -8,22 +8,12 @@
 import Foundation
 
 
-// MARK: - Option
-public enum Option: Character {
-    case list = "l"
-    case recurisve = "R"
-    case dotDirectory = "a"
-    case reverse = "r"
-    case lastModified = "t"
-}
-
-
 // MARK: - ArgumentParser
 public struct ArgumentParser {
     public var files: [String] = []
     var options: Set<Character> = []
 
-    public init(arguments: [String]) {
+    public init(_ arguments: [String]) {
         guard !arguments.isEmpty else { return }
         for i in arguments.indices {
             if arguments[i] == "--" {
