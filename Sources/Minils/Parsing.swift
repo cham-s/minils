@@ -8,10 +8,21 @@
 import Foundation
 
 
+public struct Checker {
+    
+}
+
+
 // MARK: - ArgumentParser
 public struct ArgumentParser {
     public var files: [String] = []
-    var options: Set<Character> = []
+    private var optionSet: Set<Character> = []
+    public var invalidOptions: [Character] {
+        optionSet.filter { Option(rawValue: $0) == nil }
+    }
+    public var validOtionsOptions: [Option] {
+        optionSet.compactMap { Option(rawValue: $0) }
+    }
 
     public init(_ arguments: [String]) {
         guard !arguments.isEmpty else { return }
@@ -23,7 +34,7 @@ public struct ArgumentParser {
             } else if arguments[i].hasPrefix("-") {
                 let startIndex = arguments[i].firstIndex(where: { $0 != Character("-") })!
                 let opts = Array<Character>(arguments[i][startIndex...])
-                opts.forEach { options.insert($0) }
+                opts.forEach { optionSet.insert($0) }
                 continue
             } else {
                 files.append(contentsOf: Array(arguments[i...]))
