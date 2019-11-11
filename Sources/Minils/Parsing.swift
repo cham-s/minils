@@ -17,8 +17,8 @@ public struct Checker {
 public struct ArgumentParser {
     public var files: [String] = []
     private var optionSet: Set<Character> = []
-    public var invalidOptions: [Character] {
-        optionSet.filter { Option(rawValue: $0) == nil }
+    public var invalidOptions: [String] {
+        optionSet.filter { Option(rawValue: $0) == nil }.map { String($0) }
     }
     public var validOtionsOptions: [Option] {
         optionSet.compactMap { Option(rawValue: $0) }
