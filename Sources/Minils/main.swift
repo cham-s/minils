@@ -10,7 +10,7 @@ public struct Lister {
     var parser: ArgumentParser
     
     
-    init(arguments: [String]) {
+    init(_ arguments: [String]) {
         self.parser = ArgumentParser(arguments)
     }
     
@@ -20,8 +20,13 @@ public struct Lister {
     }
     
     public func list() {
-        let fm = FileManager()
+        printIllegalOption()
         
     }
 }
+
+let lister = Lister(arguments)
+
+lister.list()
+
 
