@@ -15,7 +15,15 @@ public struct Checker {
 
 // MARK: - ArgumentParser
 public struct ArgumentParser {
-    public var files: [String] = []
+    private var files: [String] = []
+    public var validFiles: [String] {
+        let fm = FileManager()
+        return files.filter { fm.fileExists(atPath: $0) }
+    }
+    public var invalidFiles: [String] {
+        let fm = FileManager()
+        return files.filter { !fm.fileExists(atPath: $0) }
+    }
     private var optionSet: Set<Character> = []
     public var invalidOptions: [String] {
         optionSet.filter { Option(rawValue: $0) == nil }.map { String($0) }
@@ -25,7 +33,10 @@ public struct ArgumentParser {
     }
 
     public init(_ arguments: [String]) {
-        guard !arguments.isEmpty else { return }
+        guard !arguments.isEmpty else {
+            files.append(".")
+            return
+        }
         for i in arguments.indices {
             if arguments[i] == "--" {
                 let startFileIndex = arguments.index(after: i)

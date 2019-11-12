@@ -9,7 +9,6 @@ let arguments = Array(CommandLine.arguments[1...])
 public struct Lister {
     var parser: ArgumentParser
     
-    
     init(_ arguments: [String]) {
         self.parser = ArgumentParser(arguments)
     }
@@ -20,8 +19,17 @@ public struct Lister {
     }
     
     public func list() {
-        printIllegalOption()
+        let fm = FileManager()
         
+        if !parser.invalidOptions.isEmpty {
+            printIllegalOption()
+        }
+        
+        let longestLength = parser.validFiles.max()!.count
+        for path in parser.validFiles {
+            let files = try? fm.contentsOfDirectory(atPath: path)
+            
+        }
     }
 }
 
