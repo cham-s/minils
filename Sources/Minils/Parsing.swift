@@ -8,17 +8,13 @@
 import Foundation
 
 
-public struct Checker {
-    
-}
-
 public extension URL {
     /// Check if the path of the URL is a directory or not.
     /// It performs the version check for the platform, whether
     /// hasDirectoryPath
     /// - Returns: true if the the URL is of type directory, false
     /// if not.
-    var hasDirectoryforPath: Bool {
+    var isDirectory: Bool {
         if #available(OSX 10.11, *) {
             return self.hasDirectoryPath
         } else {
@@ -33,9 +29,11 @@ public extension URL {
 // MARK: - ArgumentParser
 public struct ArgumentParser {
     private var files: [String] = []
-    public var validFiles: [String] {
+    public var validURLs: [URL] {
         let fm = FileManager()
-        return files.filter { fm.fileExists(atPath: $0) }
+        return files
+                .filter { fm.fileExists(atPath: $0) }
+                .map { URL(fileURLWithPath: $0) }
     }
     public var invalidFiles: [String] {
         let fm = FileManager()

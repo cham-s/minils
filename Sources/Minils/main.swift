@@ -33,16 +33,22 @@ public struct Lister {
             }
         }
         
-//        let longestLength = parser.validFiles.max()!.count
-//        for path in parser.validFiles {
-//            let files = try? fm.contentsOfDirectory(atPath: path)
-//
-//        }
+        if parser.validURLs.count == 1 && fm.currentDirectoryPath == parser.validURLs[0].path {
+            let currentDirURL = URL(fileURLWithPath: fm.currentDirectoryPath)
+            for file in try! fm.contentsOfDirectory(at: currentDirURL, includingPropertiesForKeys: nil) {
+                print(file.lastPathComponent, terminator: " ")
+            }
+            print("")
+        }
     }
 }
 
 let lister = Lister(arguments)
 
+
 lister.list()
+
+
+
 
 
