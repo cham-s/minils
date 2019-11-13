@@ -13,6 +13,9 @@ public struct Lister {
         self.parser = ArgumentParser(arguments)
     }
     
+    /*
+     
+     */
     private func printIllegalOption() {
         let options = parser.invalidOptions.joined(separator: " ")
         print("illegal options: \(options)")
@@ -24,12 +27,17 @@ public struct Lister {
         if !parser.invalidOptions.isEmpty {
             printIllegalOption()
         }
-        
-        let longestLength = parser.validFiles.max()!.count
-        for path in parser.validFiles {
-            let files = try? fm.contentsOfDirectory(atPath: path)
-            
+        if !parser.invalidFiles.isEmpty {
+            parser.invalidFiles.forEach {
+                print("minils: \($0):  No such file or directory")
+            }
         }
+        
+//        let longestLength = parser.validFiles.max()!.count
+//        for path in parser.validFiles {
+//            let files = try? fm.contentsOfDirectory(atPath: path)
+//
+//        }
     }
 }
 
